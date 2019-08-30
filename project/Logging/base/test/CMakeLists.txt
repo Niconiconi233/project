@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 2.6)
+project(test)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+include_directories(../)
+link_directories("/home/soft01/private/Demo/WebServ/base")
+link_libraries("/home/soft01/private/Demo/WebServ/base/liblog.a")
+find_package(Threads)
+
+add_executable(main test_thread.cc)
+target_link_libraries(main ${CMAKE_THREAD_LIBS_INIT})
