@@ -118,7 +118,7 @@ void Redis::setStringValue(const std::string &key, unsigned int value)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %s %d EX %d", key.c_str(), value, timeout_);
-        if((reply_->str, "OK") != 0)
+        if(strcmp(reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue failed " << key << " " << value;
         }
@@ -131,7 +131,7 @@ void Redis::setStringValue(unsigned int key, const std::string &value, int time)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %d %s EX %d", key, value.c_str(), time);
-        if((reply_->str, "OK") != 0)
+        if(strcmp(reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue with timeout failed " << key << " " << value;
         }
@@ -144,7 +144,7 @@ void Redis::setStringValue(const std::string &key, unsigned int value, int time)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %s %d EX %d", key.c_str(), value, time);
-        if((reply_->str, "OK") != 0)
+        if(strcmp(reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue with timeout failed " << key << " " << value;
         }
@@ -157,7 +157,7 @@ void Redis::setStringValue(unsigned int key, int value)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %d %d EX %d", key, value, timeout_);
-        if((reply_->str, "OK") != 0)
+        if(strcmp(reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue failed " << key << " " << value;
         }
@@ -170,7 +170,7 @@ void Redis::setStringValue(unsigned int key, int value, int time)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %d %d EX %d", key, value, time);
-        if((reply_->str, "OK") != 0)
+        if(strcmp(reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue with timeout failed " << key << " " << value;
         }
