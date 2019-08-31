@@ -616,8 +616,9 @@ void HttpSession::send(const std::shared_ptr<TcpConnection> &ptr, HttpRequest &h
                        HttpResponse &httpResponse, std::string& body){
     httpResponse.setResponseCode(200);
     httpResponse.setContentType("text/json; charset=utf-8");
-    httpResponse.addHeader("Access-Control-Allow-Origin", "http://10.1.180.138:8080");
+    httpResponse.addHeader("Access-Control-Allow-Origin", "http://0.0.0.0");
     httpResponse.addHeader("Access-Control-Allow-Credentials","true");
+    httpResponse.addHeader("Access-Control-Allow-Method", "POST,GET");
     httpResponse.setBody(body);
     httpResponse.appendToBuffer();
     Buffer& buf = httpResponse.getBuffer();
