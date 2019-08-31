@@ -8,6 +8,7 @@
 #include "../Logging/base/Logging.h"
 
 #include <exception>
+#include <stdio.h>
 
 namespace {
 struct RedisException : public std::exception
@@ -41,7 +42,9 @@ void Redis::init()
     if(connect_ == nullptr)
     {
         //如果无法连接redis直接报错
-        throw RedisException("create connection failed");
+       printf("connect to redis failed");
+       abort();
+
     }
 }
 
@@ -102,7 +105,7 @@ void Redis::setStringValue(unsigned int key, const std::string &value)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %d %s EX %d", key, value.c_str(), timeout_);
-        if(reply_->type != REDIS_REPLY_STRING)
+        if(strcmp(reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue failed " << key << " " << value;
         }
@@ -115,7 +118,7 @@ void Redis::setStringValue(const std::string &key, unsigned int value)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %s %d EX %d", key.c_str(), value, timeout_);
-        if(reply_->type != REDIS_REPLY_STRING)
+        if((reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue failed " << key << " " << value;
         }
@@ -128,7 +131,7 @@ void Redis::setStringValue(unsigned int key, const std::string &value, int time)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %d %s EX %d", key, value.c_str(), time);
-        if(reply_->type != REDIS_REPLY_STRING)
+        if((reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue with timeout failed " << key << " " << value;
         }
@@ -141,7 +144,7 @@ void Redis::setStringValue(const std::string &key, unsigned int value, int time)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %s %d EX %d", key.c_str(), value, time);
-        if(reply_->type != REDIS_REPLY_STRING)
+        if((reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue with timeout failed " << key << " " << value;
         }
@@ -154,7 +157,7 @@ void Redis::setStringValue(unsigned int key, int value)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %d %d EX %d", key, value, timeout_);
-        if(reply_->type != REDIS_REPLY_STRING)
+        if((reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue failed " << key << " " << value;
         }
@@ -167,7 +170,7 @@ void Redis::setStringValue(unsigned int key, int value, int time)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %d %d EX %d", key, value, time);
-        if(reply_->type != REDIS_REPLY_STRING)
+        if((reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue with timeout failed " << key << " " << value;
         }
@@ -178,7 +181,7 @@ void Redis::setStringValue(unsigned int key, int value, int time)
 void Redis::setSetValue(unsigned int key, unsigned int value)
 {
     reply_ = (redisReply*)redisCommand(connect_, "SADD %d %d", key, value);
-    if(reply_->type != REDIS_REPLY_INTEGER)
+    if(reply_->integer != 1)
     {
         LOG_ERROR << "Redis::setSetValue set value failed " << key << value;
         freeReplyObject(reply_);
@@ -188,7 +191,7 @@ void Redis::setSetValue(unsigned int key, unsigned int value)
     if(!hasExpire(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "EXPIRE %d %d", key, timeout_);
-        if(reply_->type != REDIS_REPLY_INTEGER)
+        if(reply_->integer != 1)
         {
             LOG_ERROR << "Redis::setSetValue set ex failed " << key;
             freeReplyObject(reply_);
@@ -201,7 +204,7 @@ void Redis::setSetValue(unsigned int key, unsigned int value)
 void Redis::setSetValue(unsigned int key, unsigned int value, int time)
 {
     reply_ = (redisReply*)redisCommand(connect_, "SADD %d %d", key, value);
-    if(reply_->type != REDIS_REPLY_INTEGER)
+    if(reply_->integer != 1)
     {
         LOG_ERROR << "Redis::setSetValue set value failed " << key << value;
         freeReplyObject(reply_);
@@ -211,7 +214,7 @@ void Redis::setSetValue(unsigned int key, unsigned int value, int time)
     if(!hasExpire(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "EXPIRE %d %d", key, time);
-        if(reply_->type != REDIS_REPLY_INTEGER)
+        if(reply_->integer != 1)
         {
             LOG_ERROR << "Redis::setSetValue set ex failed " << key;
             freeReplyObject(reply_);
@@ -250,7 +253,7 @@ std::vector<unsigned int> Redis::getSetValue(unsigned int key)
 void Redis::setSortSetValue(const std::string &key, unsigned int value)
 {
     reply_ = (redisReply*)redisCommand(connect_, "ZADD hot %d %s", value, key.c_str());
-    if(reply_->type != REDIS_REPLY_INTEGER)
+    if(reply_->integer != 1)
     {
         LOG_ERROR << "Redis::setSortSetValue set value failed " << key << value;
         freeReplyObject(reply_);
@@ -260,7 +263,7 @@ void Redis::setSortSetValue(const std::string &key, unsigned int value)
     if(!hasExpire("hot"))
     {
         reply_ = (redisReply*)redisCommand(connect_, "EXPIRE %s %d", "hot", time);
-        if(reply_->type != REDIS_REPLY_INTEGER)
+        if(reply_->integer != 1)
         {
             LOG_ERROR << "Redis::setSortSetValue set ex failed " << key;
             freeReplyObject(reply_);
@@ -275,10 +278,6 @@ void Redis::sortSetIncr(const std::string &key, int num)
     if(existsKey("hot"))
     {
         reply_ = (redisReply*)redisCommand(connect_, "ZINCRBY hot %d %s", num, key.c_str());
-        if(reply_->type != REDIS_REPLY_STRING)
-        {
-            LOG_ERROR  << "Redis::SortSetIncr failed " << key;
-        }
         freeReplyObject(reply_);
     }else
     {
@@ -307,37 +306,36 @@ std::vector<std::string> Redis::sortSetTop()
 bool Redis::existsKey(const std::string &key)
 {
     reply_ = (redisReply*)redisCommand(connect_, "EXISTS %s", key.c_str());
-    if(reply_->type == REDIS_REPLY_INTEGER)
+    if(reply_->integer == 1)
     {
-        auto a = reply_->integer;
         freeReplyObject(reply_);
-        return a != 0;
+        return true;
+    }else
+    {
+        freeReplyObject(reply_);
+        return false;
     }
-    freeReplyObject(reply_);
-    return false;
 }
 
 bool Redis::existsKey(unsigned int key)
 {
     reply_ = (redisReply*)redisCommand(connect_, "EXISTS %d", key);
-    if(reply_->type == REDIS_REPLY_INTEGER)
+    if(reply_->integer == 1)
     {
-        auto a = reply_->integer;
         freeReplyObject(reply_);
-        return a != 0;
+        return true;
+    }else
+    {
+        freeReplyObject(reply_);
+        return false;
     }
-    freeReplyObject(reply_);
-    return false;
 }
 
 void Redis::selectTable(int num)
 {
     reply_ = (redisReply*)redisCommand(connect_, "SELECT %d", num);
-    if(reply_->type == REDIS_REPLY_STATUS)
-    {
-        if(memcmp(reply_->str, "OK", 2) != 0)
-            LOG_ERROR << "redis::selectTable failed " << num;
-    }
+    if(memcmp(reply_->str, "OK", 2) != 0)
+        LOG_ERROR << "redis::selectTable failed " << num;
     freeReplyObject(reply_);
 }
 

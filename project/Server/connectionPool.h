@@ -12,6 +12,8 @@
 #include "../Logging/base/SingLeton.h"
 #include "../Logging/base/ConfigReader.h"
 
+#include <stdio.h>//printf
+
 /*
  * 阻塞式MYSQL连接池
  */
@@ -54,11 +56,19 @@ public:
 
     void init()
     {
-        //非线程安全
-        sql::Driver* driver = sql::mysql::get_driver_instance();
-        for(size_t i = 0; i < currsize_; ++i) {
-            vector_.emplace_back(driver->connect(map_));
+        try{
+            //非线程安全
+            sql::Driver* driver = sql::mysql::get_driver_instance();
+            for(size_t i = 0; i < currsize_; ++i) {
+                vector_.emplace_back(driver->connect(map_));
+            }
+        }catch (sql::SQLException& e)
+        {
+            LOG_FATAL << "connectionPool create connection failed";
+            printf("%s", e.what());
+            abort();
         }
+
     }
 
     connPtr getConnection()

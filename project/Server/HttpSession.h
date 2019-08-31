@@ -61,7 +61,7 @@ private:
     void doChat(const std::shared_ptr<TcpConnection>& ptr, HttpRequest& httpRequest, HttpResponse& httpResponse);
 
     //错误处理相关
-    void handleError(const std::shared_ptr<TcpConnection>& ptr, HttpRequest& httpRequest, HttpResponse httpResponse);
+    void handleError(const std::shared_ptr<TcpConnection>& ptr, HttpRequest& httpRequest, HttpResponse httpResponse, int statusCode, const char* debug);
 
     //std::string headerConstructor(int code, const std::string mime, int len);
 

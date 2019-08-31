@@ -1,0 +1,479 @@
+2019-08-15 20:26:05.109121 8743 DEBUG  EventLoop created 0x7FFD8AE364D0 in thread 8743--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-15 20:26:05.379740 8743 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--25
+2019-08-15 20:26:15.665705 8743 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#1] from 10.1.180.138:50419--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-15 20:26:15.665737 8743 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#1] at 0xE05B10 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-15 20:26:15.666080 8743 DEBUG  OPTIONS /Mail HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: content-type
+Origin: http://10.1.180.138:8080
+Referer: http://10.1.180.138:8080/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--47
+2019-08-15 20:26:15.666128 8743 DEBUG  HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://10.1.180.138:50419
+Access-Control-Allow-Methods: GET,POST,OPTIONS
+Access-Control-Allow-Credentials: true
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--61
+2019-08-15 20:27:08.233645 8743 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#2] from 10.1.180.138:50464--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-15 20:27:08.233670 8743 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#2] at 0xE2C460 fd=11--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-15 20:27:08.234017 8743 DEBUG  OPTIONS /Mail HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: content-type
+Origin: http://10.1.180.138:8080
+Referer: http://10.1.180.138:8080/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--47
+2019-08-15 20:27:08.234052 8743 DEBUG  HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://10.1.180.138:50464
+Access-Control-Allow-Methods: GET,POST,OPTIONS
+Access-Control-Allow-Credentials: true
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--61
+2019-08-15 20:28:03.834593 8846 DEBUG  EventLoop created 0x7FFEAE52C650 in thread 8846--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-15 20:28:04.213395 8846 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--25
+2019-08-15 20:28:12.434628 8846 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#1] from 10.1.180.138:50523--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-15 20:28:12.434656 8846 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#1] at 0x21BAB10 fd=9--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-15 20:28:12.434993 8846 DEBUG  OPTIONS /Mail HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: content-type
+Origin: http://10.1.180.138:8080
+Referer: http://10.1.180.138:8080/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--47
+2019-08-15 20:28:12.435050 8846 DEBUG  HTTP/1.1 206 OK
+Access-Control-Allow-Origin: http://10.1.180.138:50523
+Access-Control-Allow-Methods: GET,POST,OPTIONS
+Access-Control-Allow-Credentials: true
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--61
+2019-08-15 20:31:13.624877 8985 DEBUG  EventLoop created 0x7FFE9144D470 in thread 8985--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-15 20:31:13.926985 8985 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--25
+2019-08-16 09:38:09.093069 6468 DEBUG  EventLoop created 0x7FFE3EC40030 in thread 6468--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-16 09:38:10.571873 6468 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--64
+2019-08-16 09:41:37.776060 6811 DEBUG  EventLoop created 0x7FFDBD6C7610 in thread 6811--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-16 09:41:41.327167 6811 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--64
+2019-08-16 09:43:25.442930 7012 DEBUG  EventLoop created 0x7FFE9CBC51C0 in thread 7012--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-16 09:43:26.701965 7012 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--64
+2019-08-16 09:43:48.295175 7012 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#1] from 10.1.180.146:44862--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:43:48.295204 7012 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#1] at 0x199DDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:43:48.485239 7012 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:43:50.096935 7012 DEBUG  send success to 1660994874@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--194
+2019-08-16 09:44:17.947915 7099 DEBUG  EventLoop created 0x7FFD7B7367E0 in thread 7099--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-16 09:44:19.118691 7099 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--64
+2019-08-16 09:44:35.034807 7099 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#1] from 10.1.180.146:45256--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:44:35.034845 7099 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#1] at 0x24A4DF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:44:35.034925 7099 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:47:17.278591 7099 DEBUG  send success to 1660994874@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--194
+2019-08-16 09:48:35.579226 7205 DEBUG  EventLoop created 0x7FFF74E0EE70 in thread 7205--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-16 09:48:35.798912 7205 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--64
+2019-08-16 09:48:50.509335 7205 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#1] from 10.1.180.146:47322--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:48:50.509362 7205 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#1] at 0x1EA4DF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:48:50.509519 7205 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:48:51.959779 7205 DEBUG  send success to 1660994874@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--194
+2019-08-16 09:51:54.597450 7384 DEBUG  EventLoop created 0x7FFFC91CE730 in thread 7384--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-16 09:51:55.967890 7384 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--64
+2019-08-16 09:52:03.612596 7384 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#1] from 10.1.180.146:48896--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:52:03.612625 7384 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#1] at 0x2290DF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:52:03.648896 7384 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:52:05.729379 7384 DEBUG  send success to 1660994874@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--194
+2019-08-16 09:52:06.177594 7384 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#1--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 09:52:06.177618 7384 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#1] at 0x2290DF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 09:52:08.846339 7384 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#2] from 10.1.180.146:48942--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:52:08.846375 7384 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#2] at 0x2290DF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:52:08.846502 7384 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:52:08.846526 7384 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 09:52:08.846533 7384 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 09:52:08.846565 7384 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#2--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 09:52:08.846602 7384 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#2] at 0x2290DF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 09:57:40.224790 7599 DEBUG  EventLoop created 0x7FFC6A02DDD0 in thread 7599--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-16 09:57:43.129888 7599 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--64
+2019-08-16 09:57:58.255663 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#1] from 10.1.180.146:51696--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:57:58.255691 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#1] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:57:58.281066 7599 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:57:59.521626 7599 DEBUG  send success to 1660994874@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--196
+2019-08-16 09:57:59.632688 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#1--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 09:57:59.632712 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#1] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 09:58:00.467848 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#2] from 10.1.180.146:51734--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:58:00.467885 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#2] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:58:00.468026 7599 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:58:00.468051 7599 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 09:58:00.468065 7599 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 09:58:00.468096 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#2--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 09:58:00.468134 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#2] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 09:58:58.565265 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#3] from 10.1.180.146:52204--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:58:58.565288 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#3] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:58:58.565362 7599 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:58:58.569350 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#3--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 09:58:58.569375 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#3] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 09:58:58.877806 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#4] from 10.1.180.146:52206--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:58:58.879173 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#4] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:58:58.879266 7599 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:58:58.879289 7599 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 09:58:58.879296 7599 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 09:58:58.879326 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#4--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 09:58:58.879359 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#4] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 09:59:18.321969 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#5] from 10.1.180.146:52360--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:59:18.321995 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#5] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:59:18.322064 7599 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:59:19.444597 7599 DEBUG  send success to 1660994874@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--196
+2019-08-16 09:59:19.449584 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#5--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 09:59:19.449610 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#5] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 09:59:19.645486 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#6] from 10.1.180.146:52380--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 09:59:19.645508 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#6] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 09:59:19.645576 7599 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 09:59:19.645600 7599 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 09:59:19.645608 7599 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 09:59:19.645636 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#6--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 09:59:19.645669 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#6] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:02:34.036854 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#7] from 10.1.180.146:53970--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:02:34.036911 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#7] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:02:34.036995 7599 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:02:35.755976 7599 DEBUG  send success to 1660994874@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--196
+2019-08-16 10:02:35.786070 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#7--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:02:35.786570 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#7] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:02:36.118666 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#8] from 10.1.180.146:53990--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:02:36.118689 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#8] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:02:36.118815 7599 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:02:36.118849 7599 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 10:02:36.118857 7599 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 10:02:36.118887 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#8--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:02:36.118920 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#8] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:03:28.363152 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#9] from 10.1.180.146:54418--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:03:28.363175 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#9] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:03:28.364523 7599 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:03:28.370606 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#9--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:03:28.370631 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#9] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:03:28.649109 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#10] from 10.1.180.146:54420--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:03:28.649132 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#10] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:03:28.652370 7599 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:03:28.652398 7599 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 10:03:28.652406 7599 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 10:03:28.652445 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#10--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:03:28.652482 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#10] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:04:08.553679 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#11] from 10.1.180.146:54746--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:04:08.553701 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#11] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:04:08.553768 7599 DEBUG  GET /Mail?email=1660994874%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:04:09.705467 7599 DEBUG  send success to 1660994874@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--196
+2019-08-16 10:04:09.708494 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#11--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:04:09.719195 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#11] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:04:09.935688 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#12] from 10.1.180.146:54766--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:04:09.935710 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#12] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:04:09.935777 7599 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:04:09.935800 7599 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 10:04:09.935808 7599 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1660994874%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 10:04:09.935849 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#12--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:04:09.935883 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#12] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:05:46.011079 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#13] from 10.1.180.146:55532--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:05:46.011102 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#13] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:05:46.011174 7599 DEBUG  GET /Mail?email=1805549914%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:05:47.122492 7599 DEBUG  send success to 1805549914@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--196
+2019-08-16 10:05:47.180756 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#13--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:05:47.180782 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#13] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:05:47.418426 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#14] from 10.1.180.146:55552--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:05:47.418449 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#14] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:05:47.418576 7599 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1805549914%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:05:47.418601 7599 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 10:05:47.418608 7599 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1805549914%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 10:05:47.418638 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#14--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:05:47.418671 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#14] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:08:44.599357 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#15] from 10.1.180.146:56974--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:08:44.599378 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#15] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:08:44.599446 7599 DEBUG  GET /Mail?email=1805549914%40qq.com&button= HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:08:45.672605 7599 DEBUG  send success to 1805549914@qq.com--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--196
+2019-08-16 10:08:45.675394 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#15--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:08:45.675418 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#15] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-16 10:08:45.888098 7599 INFO   TcpServer::newConnection [mailserver] - new connection [mailserver-10.1.180.146:8087#16] from 10.1.180.146:56986--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--70
+2019-08-16 10:08:45.888181 7599 DEBUG  TcpConnection::ctor[mailserver-10.1.180.146:8087#16] at 0x1C0CDF0 fd=10--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--51
+2019-08-16 10:08:45.888255 7599 DEBUG  GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1805549914%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--86
+2019-08-16 10:08:45.888278 7599 ERROR  RequestParse::parseQuery unkown query--/home/soft01/cache/net_t/net_fix/Server/RequestParse.cpp--102
+2019-08-16 10:08:45.888286 7599 ERROR  header error GET /favicon.ico HTTP/1.1
+Host: 10.1.180.146:8087
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+Accept: image/webp,image/*,*/*;q=0.8
+Referer: http://10.1.180.146:8087/Mail?email=1805549914%40qq.com&button=
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+
+--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--119
+2019-08-16 10:08:45.888315 7599 INFO   TcpServer::removeConnectionInLoop [mailserver] - connection mailserver-10.1.180.146:8087#16--/home/soft01/cache/net_t/net_fix/net/TcpServer.cc--99
+2019-08-16 10:08:45.888348 7599 DEBUG  TcpConnection::dtor[mailserver-10.1.180.146:8087#16] at 0x1C0CDF0 fd=10 state=kDisconnected--/home/soft01/cache/net_t/net_fix/net/TcpConnection.cc--58
+2019-08-27 15:44:27.866216 6626 DEBUG  EventLoop created 0x7FFC23FB1930 in thread 6626--/home/soft01/cache/net_t/net_fix/net/EventLoop.cc--70
+2019-08-27 15:44:28.721858 6626 DEBUG  Mailserver started--/home/soft01/cache/net_t/net_fix/Server/MailServer/MailServer.cpp--64

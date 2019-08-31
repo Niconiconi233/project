@@ -46,7 +46,7 @@ void HttpSession::onMessage(const std::shared_ptr<TcpConnection> &ptr, Buffer *b
     }
     httpeContext_->reset();
     httpeContext_->parseRequest(buffer);
-    LOG_DEBUG << buffer->peek();
+    //LOG_DEBUG << buffer->peek();
     if(httpeContext_->gotAll())
     {
         HttpRequest& request = httpeContext_->request();
@@ -129,7 +129,7 @@ void HttpSession::handleEvents(const std::shared_ptr<TcpConnection> &ptr, HttpRe
 #endif
     }
     else
-        handleError(ptr, httpRequest, httpResponse);
+        handleError(ptr, httpRequest, httpResponse, 0, "unkown query type");
 }
 
 /*
@@ -139,7 +139,7 @@ void HttpSession::handleEvents(const std::shared_ptr<TcpConnection> &ptr, HttpRe
 //登陆
 void HttpSession::doLogin(const std::shared_ptr<TcpConnection> &ptr, HttpRequest& httpRequest, HttpResponse& httpResponse)
 {
-    if(httpRequest.getQueryArguments("token").length() == 0)
+    if(!httpRequest.queryArgumentsExists("token"))
     {
         if(httpRequest.queryArgumentsExists("email") && httpRequest.queryArgumentsExists("pwd"))
         {
@@ -175,13 +175,13 @@ void HttpSession::doLogin(const std::shared_ptr<TcpConnection> &ptr, HttpRequest
             {
                 LOG_LOG << "Login failed ";
                 //FIXME logfailed
-                handleError(ptr, httpRequest, httpResponse);
+                handleError(ptr, httpRequest, httpResponse, 0, "username or pwd error");
             }
             pool.close(conn);
         } else
         {
             LOG_ERROR<<"doLogin failed " << httpRequest.getQueryArguments("email")<<" "<<httpRequest.getQueryArguments("pwd");
-            handleError(ptr, httpRequest, httpResponse);
+            handleError(ptr, httpRequest, httpResponse, 0, "input value error");
         }
     }else
     {
@@ -203,6 +203,7 @@ void HttpSession::doLogin(const std::shared_ptr<TcpConnection> &ptr, HttpRequest
         {
             //TODO 客户端重新登陆
             LOG_DEBUG << "doLogin client neet to login again token is dead";
+            handleError(ptr, httpRequest, httpResponse, 0, "need to re login");
         }
     }
 }
@@ -275,32 +276,64 @@ void HttpSession::doRegist(const std::shared_ptr<TcpConnection> &ptr, HttpReques
                 } else
                 {
                     LOG_ERROR << "doRegist failed ret returned " << ret;
-                    handleError(ptr, httpRequest, httpResponse);
+                    handleError(ptr, httpRequest, httpResponse, 0, "doRegist ret failed");
                 }
                 pool.close(conn);
             }catch (sql::SQLException& e)
             {
                 LOG_FATAL << "doReg catch a exception " << e.what();
                 pool.close(conn);
-                handleError(ptr, httpRequest, httpResponse);
+                handleError(ptr, httpRequest, httpResponse, 0, "catch a exp");
             }
         } else
         {
             LOG_LOG << "doReg failed email address already has";
-            handleError(ptr, httpRequest, httpResponse);
+            handleError(ptr, httpRequest, httpResponse, 2, "emaill address already has");
         }
     }else
     {
         LOG_WARN << "doRegist but some value is empty " << httpRequest.getQueryArguments("email")
         <<" "<<httpRequest.getQueryArguments("pwd");
-        handleError(ptr, httpRequest, httpResponse);
+        handleError(ptr, httpRequest, httpResponse, 0, "input value error");
     }
 
 }
 
 void HttpSession::doGetIndex(const std::shared_ptr<TcpConnection> &ptr, HttpRequest& httpRequest, HttpResponse& httpResponse)
 {
+    auto& pool = Singletion<ConnectionPool>::instance();
+    auto conn = pool.getConnection();
+    std::unique_ptr<sql::PreparedStatement> pre_stmt(conn->prepareStatement("select p_id, p_name, p_price, p_wcount, group_concat(p_imageaddr separator ';') as images,\n"
+                                                                            "uid, nickname, image\n"
+                                                                            "from mydb.production_info\n"
+                                                                            "group by p_id\n"
+                                                                            "order by RAND()"
+                                                                            "limit 8;"));
 
+    std::unique_ptr<sql::ResultSet> res(pre_stmt->executeQuery());
+    if(res->next())
+    {
+        RapidJson json;
+        json.setObject("status", 1);
+        do{
+            json.setObjectToArray("pid", res->getInt("p_id"));
+            json.setObjectToArray("pname", res->getString("p_name").c_str());
+            json.setObjectToArray("pimages", res->getString("images").c_str());
+            json.setObjectToArray("watched", res->getInt("p_wcount"));
+            json.setObjectToArray("price", static_cast<double>(res->getDouble("p_price")));
+            json.setObjectToArray("uid", res->getInt("uid"));
+            json.setObjectToArray("nickname", res->getString("nickname").c_str());
+            json.setObjectToArray("image", res->getString("image").c_str());
+            json.flushToArray();
+        }while(res->next());
+        json.flushToRoot("data");
+        std::string json_body(json.toString());
+        send(ptr, httpRequest, httpResponse, json_body);
+    }else
+    {
+        LOG_ERROR << "doIndex failed";
+        handleError(ptr, httpRequest, httpResponse, 0, "GetIndex failed");
+    }
 }
 
 void HttpSession::doRelease(const std::shared_ptr<TcpConnection> &ptr, HttpRequest& httpRequest, HttpResponse& httpResponse)
@@ -328,7 +361,7 @@ void HttpSession::doSearch(const std::shared_ptr<TcpConnection> &ptr, HttpReques
     }
     else{
         LOG_ERROR << "unkown type " << type;
-        handleError(ptr, httpRequest, httpResponse);
+        handleError(ptr, httpRequest, httpResponse, 0, "search type error");
     }
 }
 
@@ -362,13 +395,13 @@ void HttpSession::searchAndSendUser(const std::shared_ptr<TcpConnection> &ptr, H
        }else
        {
            LOG_ERROR << "searchAndSendUser but no such user";
-           handleError(ptr, httpRequest, httpResponse);
+           handleError(ptr, httpRequest, httpResponse, 0, "no such user");
        }
        pool.close(conn);
    } else
    {
        LOG_ERROR << "searchAndSendUser but uid error " << httpRequest.getQueryArguments("uid");
-       handleError(ptr, httpRequest, httpResponse);
+       handleError(ptr, httpRequest, httpResponse, 0, "uid failed");
    }
 }
 
@@ -378,8 +411,8 @@ void HttpSession::searchAndSendCategories(const std::shared_ptr<TcpConnection> &
     {
         auto& pool = Singletion<ConnectionPool>::instance();
         auto conn = pool.getConnection();
-        std::shared_ptr<sql::PreparedStatement> pre_stmt(conn->prepareStatement("select p_id, p_name, p_description, p_price, p_wcount, group_concat(p_imageaddr separator ';') as images,\n"
-                                                                                "uid, sex, nickname, description, image\n"
+        std::unique_ptr<sql::PreparedStatement> pre_stmt(conn->prepareStatement("select p_id, p_name, p_price, p_wcount, group_concat(p_imageaddr separator ';') as images,\n"
+                                                                                "uid, nickname, image\n"
                                                                                 "from mydb.production_info\n"
                                                                                 "where p_cid = ?\n"
                                                                                 "group by p_id\n"
@@ -389,7 +422,7 @@ void HttpSession::searchAndSendCategories(const std::shared_ptr<TcpConnection> &
 #ifdef debug
         auto begin = std::chrono::high_resolution_clock::now();
 #endif
-        std::shared_ptr<sql::ResultSet> res(pre_stmt->executeQuery());
+        std::unique_ptr<sql::ResultSet> res(pre_stmt->executeQuery());
 #ifdef debug
         auto end = std::chrono::high_resolution_clock::now();
        LOG_DEBUG <<"doRegist select sql 2 speed :"<< std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
@@ -401,13 +434,13 @@ void HttpSession::searchAndSendCategories(const std::shared_ptr<TcpConnection> &
             do{
                 json.setObjectToArray("pid", res->getInt("p_id"));
                 json.setObjectToArray("pname", res->getString("p_name").c_str());
-                json.setObjectToArray("p_description", res->getString("p_description").c_str());
+                //json.setObjectToArray("p_description", res->getString("p_description").c_str());
                 json.setObjectToArray("pimages", res->getString("images").c_str());
                 json.setObjectToArray("price", static_cast<double>(res->getDouble("p_price")));
                 json.setObjectToArray("uid", res->getInt("uid"));
-                json.setObjectToArray("sex", res->getString("sex").c_str());
+                //json.setObjectToArray("sex", res->getString("sex").c_str());
                 json.setObjectToArray("nickname", res->getString("nickname").c_str());
-                json.setObjectToArray("description", res->getString("description").c_str());
+                //json.setObjectToArray("description", res->getString("description").c_str());
                 json.setObjectToArray("image", res->getString("image").c_str());
                 json.flushToArray();
             }while(res->next());
@@ -417,13 +450,13 @@ void HttpSession::searchAndSendCategories(const std::shared_ptr<TcpConnection> &
         }else
         {
             LOG_ERROR << "searchAndSendCategories failed no such categories " << httpRequest.getQueryArguments("codelist");
-            handleError(ptr, httpRequest, httpResponse);
+            handleError(ptr, httpRequest, httpResponse, 0, "no such categories");
         }
         pool.close(conn);
     }else
     {
         LOG_ERROR << "searchAndSendCategories failed can't get cid ";
-        handleError(ptr, httpRequest, httpResponse);
+        handleError(ptr, httpRequest, httpResponse, 0, "cid failed");
     }
 }
 
@@ -434,8 +467,8 @@ void HttpSession::searchAndSendCategory(const std::shared_ptr<TcpConnection> &pt
         //LOG_DEBUG << httpRequest.getQueryARgumentsWithDecode("kw");
         auto& pool = Singletion<ConnectionPool>::instance();
         auto conn = pool.getConnection();
-        std::shared_ptr<sql::PreparedStatement> pre_stmt(conn->prepareStatement("select p_id, p_name, p_description, p_price, p_wcount, group_concat(p_imageaddr separator ';') as images,\n"
-                                                                                "uid, sex, nickname, description, image\n"
+        std::unique_ptr<sql::PreparedStatement> pre_stmt(conn->prepareStatement("select p_id, p_name, p_price, p_wcount, group_concat(p_imageaddr separator ';') as images,\n"
+                                                                                "uid, nickname, image\n"
                                                                                 "from mydb.production_info\n"
                                                                                 "where p_name like ?\n"
                                                                                 "group by p_id\n"
@@ -445,7 +478,7 @@ void HttpSession::searchAndSendCategory(const std::shared_ptr<TcpConnection> &pt
 #ifdef debug
         auto begin = std::chrono::high_resolution_clock::now();
 #endif
-        std::shared_ptr<sql::ResultSet> res(pre_stmt->executeQuery());
+        std::unique_ptr<sql::ResultSet> res(pre_stmt->executeQuery());
 #ifdef debug
         auto end = std::chrono::high_resolution_clock::now();
        LOG_DEBUG <<"doRegist select sql 2 speed :"<< std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
@@ -457,13 +490,13 @@ void HttpSession::searchAndSendCategory(const std::shared_ptr<TcpConnection> &pt
             do{
                 json.setObjectToArray("pid", res->getInt("p_id"));
                 json.setObjectToArray("pname", res->getString("p_name").c_str());
-                json.setObjectToArray("p_description", res->getString("p_description").c_str());
+                //json.setObjectToArray("p_description", res->getString("p_description").c_str());
                 json.setObjectToArray("pimages", res->getString("images").c_str());
                 json.setObjectToArray("price", static_cast<double>(res->getDouble("p_price")));
                 json.setObjectToArray("uid", res->getInt("uid"));
-                json.setObjectToArray("sex", res->getString("sex").c_str());
+                //json.setObjectToArray("sex", res->getString("sex").c_str());
                 json.setObjectToArray("nickname", res->getString("nickname").c_str());
-                json.setObjectToArray("description", res->getString("description").c_str());
+                //json.setObjectToArray("description", res->getString("description").c_str());
                 json.setObjectToArray("image", res->getString("image").c_str());
                 json.flushToArray();
             }while(res->next());
@@ -472,14 +505,14 @@ void HttpSession::searchAndSendCategory(const std::shared_ptr<TcpConnection> &pt
             send(ptr, httpRequest, httpResponse, json_body);
         }else
         {
-            LOG_ERROR << "searchAndSendCategories failed no such categories " << httpRequest.getQueryArguments("kw");
-            handleError(ptr, httpRequest, httpResponse);
+            LOG_ERROR << "searchAndSendCategory failed no such kw " << httpRequest.getQueryArguments("kw");
+            handleError(ptr, httpRequest, httpResponse, 0, "no such kw");
         }
         pool.close(conn);
     }else
     {
-        LOG_ERROR << "searchAndSendCategories failed can't get cid ";
-        handleError(ptr, httpRequest, httpResponse);
+        LOG_ERROR << "searchAndSendCategory failed can't get kw";
+        handleError(ptr, httpRequest, httpResponse, 0, "kw failed");
     }
 }
 
@@ -487,59 +520,71 @@ void HttpSession::searchAndSendGoods(const std::shared_ptr<TcpConnection> &ptr, 
 {
     if(httpRequest.queryArgumentsExists("pid"))
     {
-        uint32_t code = atoi(httpRequest.getQueryArguments("pid").c_str());
-        LOG_DEBUG << code;
-        if(code != 0 )
+        int pid = atoi(httpRequest.getQueryArguments("pid").c_str());
+        if(pid > 0)
         {
-            auto& pool = Singletion<ConnectionPool>::instance();
-            auto conn = pool.getConnection();
-            std::unique_ptr<sql::PreparedStatement> pre_stmt(conn->prepareStatement("select p_id, p_name, p_description, p_price, p_wcount, group_concat(p_imageaddr separator ';') as images,\n"
-                                                                                    "uid, sex, nickname, description, image\n"
-                                                                                    "from mydb.production_info\n"
-                                                                                    "where p_id = ?\n"
-                                                                                    "group by p_id"));
-            pre_stmt->setInt(1, code);
-#ifdef debug
-            auto begin = std::chrono::high_resolution_clock::now();
-#endif
-            std::unique_ptr<sql::ResultSet> res(pre_stmt->executeQuery());
-#ifdef debug
-            auto end = std::chrono::high_resolution_clock::now();
-            LOG_DEBUG <<"doRegist select sql 2 speed :"<< std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
-#endif
-            if(res->next())
+            auto& redispool = Singletion<RedisConnectionPool>::instance();
+            auto redisconn = redispool.getConnection();
+            redisconn->selectTable(1);
+            if(redisconn->existsKey(pid))
             {
-                RapidJson json;
-                json.setObject("status", 1);
-                json.setObject("pid", res->getInt("p_id"));
-                json.setObject("pname", res->getString("p_name").c_str());
-                json.setObject("p_description", res->getString("p_description").c_str());
-                json.setObject("pimages", res->getString("images").c_str());
-                json.setObject("price", static_cast<double>(res->getDouble("p_price")));
-                json.setObject("uid", res->getInt("uid"));
-                json.setObject("sex", res->getString("sex").c_str());
-                json.setObject("nickname", res->getString("nickname").c_str());
-                json.setObject("description", res->getString("description").c_str());
-                json.setObject("image", res->getString("image").c_str());
-                std::string json_body(json.toString());
+                std::string json_body(redisconn->getStringValue(pid));
                 send(ptr, httpRequest, httpResponse, json_body);
-            }else
+                redispool.close(redisconn);
+                LOG_DEBUG << "searchAndSendGoods by cache";
+            } else
             {
-                LOG_ERROR << "searchAndSendGoods failed " << code;
-                handleError(ptr, httpRequest, httpResponse);
+                auto &pool = Singletion<ConnectionPool>::instance();
+                auto conn = pool.getConnection();
+                std::unique_ptr<sql::PreparedStatement> pre_stmt(conn->prepareStatement(
+                        "select p_id, p_name, p_description, p_price, p_wcount, group_concat(p_imageaddr separator ';') as images,\n"
+                        "uid, sex, nickname, description, image\n"
+                        "from mydb.production_info\n"
+                        "where p_id = ?\n"
+                        "group by p_id"));
+                pre_stmt->setInt(1, pid);
+#ifdef debug
+                auto begin = std::chrono::high_resolution_clock::now();
+#endif
+                std::unique_ptr<sql::ResultSet> res(pre_stmt->executeQuery());
+#ifdef debug
+                auto end = std::chrono::high_resolution_clock::now();
+                LOG_DEBUG <<"doRegist select sql 2 speed :"<< std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+#endif
+                if (res->next()) {
+                    RapidJson json;
+                    json.setObject("status", 1);
+                    json.setObject("pid", res->getInt("p_id"));
+                    json.setObject("pname", res->getString("p_name").c_str());
+                    json.setObject("p_description", res->getString("p_description").c_str());
+                    json.setObject("pimages", res->getString("images").c_str());
+                    json.setObject("price", static_cast<double>(res->getDouble("p_price")));
+                    json.setObject("uid", res->getInt("uid"));
+                    json.setObject("sex", res->getString("sex").c_str());
+                    json.setObject("nickname", res->getString("nickname").c_str());
+                    json.setObject("description", res->getString("description").c_str());
+                    json.setObject("image", res->getString("image").c_str());
+                    std::string json_body(json.toString());
+                    redisconn->setStringValue(pid, json_body);
+                    redisconn->selectTable(0);
+                    redispool.close(redisconn);
+                    send(ptr, httpRequest, httpResponse, json_body);
+                }else
+                {
+                    LOG_DEBUG << "searchAndSendGoods failed system error";
+                    handleError(ptr, httpRequest, httpResponse, 0, "system error");
+                }
             }
-            pool.close(conn);
-        }else
+        } else
         {
-            LOG_ERROR << "searchAndSendGoods but code = 0" << code;
-            handleError(ptr, httpRequest, httpResponse);
+            LOG_ERROR << "searchAndSendGoods failed pid = 0";
+            handleError(ptr, httpRequest, httpResponse, 0, "pid is zero");
         }
     }else
     {
-        LOG_FATAL << "searchAndSendGoods failed no code input";
-        handleError(ptr, httpRequest, httpResponse);
+        LOG_ERROR << "searchAndSendGoods failed no pid input";
+        handleError(ptr, httpRequest, httpResponse, 0, "no pid input");
     }
-
 }
 
 void HttpSession::doMod(const std::shared_ptr<TcpConnection> &ptr, HttpRequest& httpRequest, HttpResponse& httpResponse)
@@ -557,11 +602,12 @@ void HttpSession::doGuss(const std::shared_ptr<TcpConnection> &ptr, HttpRequest 
 
 }
 
-void HttpSession::handleError(const std::shared_ptr<TcpConnection> &ptr, HttpRequest& httpRequest, HttpResponse httpResponse)
+void HttpSession::handleError(const std::shared_ptr<TcpConnection> &ptr, HttpRequest& httpRequest, HttpResponse httpResponse, int statusCode, const char* debug)
 {
     LOG_DEBUG << "in handleError";
     RapidJson json;
-    json.setObject("status", 0);
+    json.setObject("status", statusCode);
+    json.setObject("debug", debug);
     std::string json_body(json.toString());
     send(ptr, httpRequest, httpResponse, json_body);
 }

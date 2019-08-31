@@ -1,0 +1,4 @@
+/home/soft01/下载/clion-2019.1.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/soft01/cache/net_t/net_fix/Server/MailServer
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/soft01/cache/net_t/net_fix/Server/MailServer/cmake-build-debug
