@@ -11,7 +11,7 @@
 
 int main()
 {
-    std::string str("GET /s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&ch=&tn=baidu&bar=&wd=c%2B%2B+%E5%9C%A8%E7%BA%BF+-baijiahao&oq=iris%2520-baijiahao&rsv_pq=bc2c035c00529a6e&rsv_t=90acH1N7S4LZIkgOkqmxAQKaHEkNhp7yOH3U9rPWtllu1y%2BfCzjOsJICYqs&rqlang=cn&rsv_enter=1&rsv_dl=tb&inputT=6191 HTTP/1.1\r\n"
+    std::string str("GET /Index HTTP/1.1\r\n"
                     "Host: www.baidu.com\r\n"
                     "Connection: keep-alive\r\n"
                     "Upgrade-Insecure-Requests: 1\r\n"

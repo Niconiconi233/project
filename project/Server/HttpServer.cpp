@@ -21,7 +21,8 @@ HttpServer::HttpServer(const std::string ip, const int16_t port, EventLoop* loop
          ip_(ip),
          port_(port),
          threadNumber_(threadNumber),
-         mutex_()
+         sessionMutex_(),
+         userMutex_()
 {
 
 }
@@ -39,6 +40,7 @@ void HttpServer::init()
     tcpServer_.reset(new TcpServer(loop_, servaddr, "server"));
     tcpServer_->setThreadNum(threadNumber_);
     tcpServer_->setConnectionCallback(std::bind(&HttpServer::onConnect, this, std::placeholders::_1));
+    loop_->runEvery(10, std::bind(&HttpServer::checkStatus, this));
     LOG_DEBUG << "server started";
     tcpServer_->start();
 }
@@ -46,10 +48,10 @@ void HttpServer::init()
 void HttpServer::onConnect(const TcpConnectionPtr& ptr)
 {
     if(ptr->connected()){
-        std::shared_ptr<HttpSession> session(new HttpSession(ptr, sessionId_.load()));
+        std::shared_ptr<HttpSession> session(new HttpSession(ptr, sessionId_.load(), this));
         ++sessionId_;
         {
-            MutexLockGurard lock(mutex_);
+            MutexLockGurard lock(sessionMutex_);
             sessionLists_[ptr->getFd()] = session;
         }
         ptr->setMessageCallback(std::bind(&HttpSession::onMessage, session.get(), std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
@@ -58,13 +60,17 @@ void HttpServer::onConnect(const TcpConnectionPtr& ptr)
     else
     {
         {
-            MutexLockGurard lock(mutex_);
+            MutexLockGurard lock(sessionMutex_);
             size_t ret = sessionLists_.erase(ptr->getFd());
             assert(ret == 1);
             LOG_DEBUG << "HttpServer::onconnection connection closed";
         }
     }
+}
 
+void HttpServer::checkStatus()
+{
+    taskList_.check();
 }
 
 #include "HttpServer.h"

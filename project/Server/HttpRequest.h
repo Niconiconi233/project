@@ -146,8 +146,6 @@ public:
         return body_;
     }
 
-
-
     void addHeader(const char* start, const char* colon, const char* end)
     {
         std::string field(start, colon);

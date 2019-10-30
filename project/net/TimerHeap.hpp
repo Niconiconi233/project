@@ -73,6 +73,11 @@ public:
         return arr_.size();
     }
 
+    bool exist(const T& value, std::function<bool(const T& lhs, const T& rhs)> compare)
+    {
+        return search(value, compare);
+    }
+
 private: 
     size_t getLeftChild(size_t i)
     {
@@ -103,6 +108,14 @@ private:
     void removeAndAdjust(T& value, size_t pos)
     {
         std::lock_guard<std::mutex> lock(mutex_);
+        if(arr_.size() == 0)
+            return;
+        if(arr_.size() == 1)
+        {
+            value = std::move(arr_[0]);
+            arr_.pop_back();
+            return;
+        }else
         {
             std::swap(arr_[pos], arr_[arr_.size() - 1]);
             value = std::move(arr_[arr_.size() - 1]);
@@ -116,7 +129,6 @@ private:
      */
     void removeAndAdjustWithLock(size_t pos)
     {
-        //std::lock_guard<std::mutex> lock(mutex_);
         {
             std::swap(arr_[pos], arr_[arr_.size() - 1]);
             arr_.pop_back();
@@ -170,6 +182,8 @@ private:
     bool searchAndRemove(const T& value, std::function<bool(const T& lhs, const T& rhs)>& compare)
     {
         std::lock_guard<std::mutex> lock(mutex_);
+        if(arr_.size() == 0)
+            return false;
         std::stack<size_t> stack_;
         size_t pos = 0;
         bool flag = false;
@@ -181,6 +195,38 @@ private:
                 if(compare(arr_[pos], value))
                 {
                     removeAndAdjustWithLock(pos);
+                    flag = true;
+                    break;
+                }
+                pos = getLeftChild(pos);
+            }
+            pos = getLeftChild(pos);
+            if(!stack_.empty())
+            {
+                pos = stack_.top();
+                stack_.pop();
+                pos = getRightChild(pos);
+            }
+        }
+        return flag;
+    }
+
+    bool search(const T& value, std::function<bool(const T& lhs, const T& rhs)>& compare)
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if(arr_.size() == 0)
+            return false;
+        std::stack<size_t> stack_;
+        size_t pos = 0;
+        bool flag = false;
+        while(pos < arr_.size() || !stack_.empty())
+        {
+            while(pos < arr_.size())
+            {
+                stack_.push(pos);
+                if(compare(arr_[pos], value))
+                {
+                    //removeAndAdjustWithLock(pos);
                     flag = true;
                     break;
                 }

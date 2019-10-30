@@ -1,0 +1,3 @@
+/home/soft01/cache/net_t/net_fix/Server/test/CMakeFiles/rebuild_cache.dir
+/home/soft01/cache/net_t/net_fix/Server/test/CMakeFiles/main.dir
+/home/soft01/cache/net_t/net_fix/Server/test/CMakeFiles/edit_cache.dir

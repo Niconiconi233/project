@@ -39,12 +39,11 @@ void Redis::init()
     auto& reader = Singletion<ConfigReader>::instance();
     struct timeval timeout = { 1, 500000 };//连接超时为1.5秒
     connect_ =  redisConnectWithTimeout(reader.getAsString("redis_ip").c_str(), reader.getAsInt("redis_port"), timeout);
-    if(connect_ == nullptr)
+    if(connect_->err != 0)
     {
         //如果无法连接redis直接报错
-       printf("connect to redis failed");
-       abort();
-
+       //printf("can't to redis failed\n");
+       throw RedisException("redis not avaliable");
     }
 }
 
@@ -118,6 +117,19 @@ void Redis::setStringValue(const std::string &key, unsigned int value)
     if(!existsKey(key))
     {
         reply_ = (redisReply*)redisCommand(connect_, "SET %s %d EX %d", key.c_str(), value, timeout_);
+        if(strcmp(reply_->str, "OK") != 0)
+        {
+            LOG_ERROR << "Redis::setStringValue failed " << key << " " << value;
+        }
+        freeReplyObject(reply_);
+    }
+}
+
+void Redis::setStringValue(const char* key, const char* value, int time)
+{
+    if(!existsKey(key))
+    {
+        reply_ = (redisReply*)redisCommand(connect_, "SET %s %s EX %d", key, value, time);
         if(strcmp(reply_->str, "OK") != 0)
         {
             LOG_ERROR << "Redis::setStringValue failed " << key << " " << value;
@@ -334,7 +346,7 @@ bool Redis::existsKey(unsigned int key)
 void Redis::selectTable(int num)
 {
     reply_ = (redisReply*)redisCommand(connect_, "SELECT %d", num);
-    if(memcmp(reply_->str, "OK", 2) != 0)
+    if(strcmp(reply_->str, "OK") != 0)
         LOG_ERROR << "redis::selectTable failed " << num;
     freeReplyObject(reply_);
 }
@@ -389,11 +401,90 @@ bool Redis::hasExpire(unsigned int key)
         return false;
 }
 
+bool Redis::delValue(const std::string &key)
+{
+    if(existsKey(key))
+    {
+        reply_ = (redisReply*)redisCommand(connect_, "DEL %s", key.c_str());
+        if(reply_->integer > 0)
+        {
+            freeReplyObject(reply_);
+            return true;
+        }else
+        {
+            freeReplyObject(reply_);
+            LOG_DEBUG << "Redis::delValue " << reply_->integer;
+            return false;
+        }
+    }else
+        return false;
+}
+
+bool Redis::delValue(int key)
+{
+    if(existsKey(key))
+    {
+        reply_ = (redisReply*)redisCommand(connect_, "DEL %d", key);
+        if(reply_->integer > 0)
+        {
+            freeReplyObject(reply_);
+            return true;
+        }else
+        {
+            freeReplyObject(reply_);
+            LOG_DEBUG << "Redis::delValue " << reply_->integer;
+            return false;
+        }
+    }else
+        return false;
+}
 
 
+void Redis::setListValue(int uid, const char* message)
+{
+    reply_ = (redisReply*)redisCommand(connect_, "LPUSH %d %s", uid, message);
+    if(reply_->integer > 0)
+    {
+        freeReplyObject(reply_);
+    } else
+    {
+        LOG_ERROR << "Redis::setListValue failed";
+        freeReplyObject(reply_);
+    }
+}
 
+size_t Redis::getListLen(int uid)
+{
+    reply_ = (redisReply*)redisCommand(connect_, "LLEN %d", uid);
+    size_t len = reply_->integer;
+    freeReplyObject(reply_);
+    return len;
+}
 
+std::vector<std::string> Redis::getListRange(int uid, size_t begin, size_t end)
+{
+    std::vector<std::string> res;
+    reply_ = (redisReply*)redisCommand(connect_, "LRANGE %d %d %d", uid, begin, end);
+    for(size_t i = 0; i < reply_->elements; ++i)
+    {
+        res.emplace_back(reply_->element[i]->str);
+    }
+    freeReplyObject(reply_);
+    return res;
+}
 
+void Redis::removeListRange(int uid, int begin, int end)
+{
+    reply_ = (redisReply*)redisCommand(connect_, "LTRIM %d %d %d", uid, begin, end);
+    if(strcmp(reply_->str, "OK") == 0)
+    {
+        freeReplyObject(reply_);
+    }else
+    {
+        LOG_ERROR << "Redis::removeListRange failed " << reply_->str;
+        freeReplyObject(reply_);
+    }
+}
 
 
 

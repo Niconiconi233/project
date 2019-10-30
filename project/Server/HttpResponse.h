@@ -10,7 +10,7 @@ class Buffer;
 
 class HttpResponse {
 public:
-    explicit HttpResponse(Buffer& buffer, bool close)
+    explicit HttpResponse(Buffer* buffer, bool close)
         :buffer_(buffer),
         responceCode_(0),
         closeConnection_(close)
@@ -50,7 +50,7 @@ public:
 
     void appendToBuffer() const;
 
-    Buffer& getBuffer()
+    Buffer* getBuffer()
     {
         return buffer_;
     }
@@ -59,7 +59,8 @@ public:
 
 private:
     std::map<std::string, std::string> headers_;
-    Buffer& buffer_;
+    //Buffer& buffer_;
+    Buffer* buffer_;
     int responceCode_;
     //HttpStatusCode statusCode_;
     //fixme add http version

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(test)
 
-add_executable(main test.cc ../../Server/HttpServer.cpp ../../Server/HttpServer.h ../../Server/HttpSession.cpp ../../Server/HttpSession.h)
+add_executable(main test.cc)
 
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")

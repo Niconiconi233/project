@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++0x -fPIC -g  -rdynamic CMakeFiles/main.dir/test_tasklist.cpp.o CMakeFiles/main.dir/home/soft01/cache/net_t/net_fix/Server/TaskList.cpp.o  -o main -lpthread -llog -lnet 

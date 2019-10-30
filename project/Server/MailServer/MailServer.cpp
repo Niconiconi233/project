@@ -9,52 +9,18 @@
 #include "../../Logging/base/Logging.h"
 #include "../../Logging/base/SingLeton.h"
 #include "../../net/EventLoop.h"
-#include "../RequestParse.h"
+#include "../HttpContext.h"
+#include "../HttpRequest.h"
+#include "../HttpResponse.h"
 #include "../RedisConnectionPool.h"
-
-namespace
-{
-    std::pair<int, std::string> arr[] = {
-            std::make_pair(200, "HTTP/1.1 200 OK\r\n"),
-            std::make_pair(400, "HTTP/1.1 400 Bad Request\r\n"),
-            std::make_pair(403, "HTTP/1.1 403 Forbidden\r\n"),
-            std::make_pair(404, "HTTP/1.1 404 Not Found\r\n"),
-            std::make_pair(500, "HTTP/1.1 500 Internal Server Error\r\n"),
-            std::make_pair(503, "HTTP/1.1 503 Server Unavailable\r\n")
-
-    };
-
-    std::string headerConstructor(int code)
-    {
-        std::string header_buff;
-        header_buff += arr[code].second;
-        header_buff += "Content-Type: text/html;charset=utf-8\r\n";
-        header_buff += "Content-Length: 0\r\n";
-        header_buff += "Connection: close\r\n";
-        header_buff += "Server: Nico's Web Server\r\n";
-        header_buff += "Cache-Control: max-age=0\r\n";
-        //header_buff += "Access-Control-Allow-Origin:http://10.1.180.138:8080\r\n";
-        //FIXME to ip port
-        //header_buff += "Access-Control-Allow-Credentials:true\r\n";
-        header_buff += "\r\n";
-        return header_buff;
-    }
-
-    void close(const std::shared_ptr<TcpConnection>& ptr)
-    {
-        std::string header(headerConstructor(0));
-        ptr->send(header.c_str(), header.length());
-    }
-
-
-}
 
 
 MailServer::MailServer(const std::string &servaddress, uint16_t port, EventLoop *loop)
     :loop_(loop),
     address_(std::move(servaddress)),
     port_(port),
-    parse_(new RequestParse)
+    httpContext_(new HttpContext),
+    buffer_(new Buffer)
 {
     InetAddress servaddr(address_, port);
     servPtr_.reset(new TcpServer(loop_, servaddr, "mailserver"));
@@ -66,8 +32,6 @@ MailServer::MailServer(const std::string &servaddress, uint16_t port, EventLoop 
 
 MailServer::~MailServer()
 {
-    //loop_->quit();
-    //servPtr_.reset();
     Py_DECREF(pModule);
     Py_DECREF(pDict);
     Py_DECREF(pClass);
@@ -87,49 +51,18 @@ void MailServer::onMessage(const std::shared_ptr<TcpConnection>& ptr, Buffer *bu
 {
     if(buffer->readableBytes() < 4)
         return ;
-    std::string header(buffer->peek(), buffer->readableBytes());
-    LOG_DEBUG << header;
-
-    if(parse_->parse(header))
+    httpContext_->reset();
+    httpContext_->parseRequest(buffer);
+    if(httpContext_->gotAll())
     {
-        if(parse_->parseOk())
-        {
-            if(parse_->methodOption())
-            {
-                string str;
-                str += "HTTP/1.1 200 OK\r\n";
-                str += "Access-Control-Allow-Headers: content-type\r\n";
-                str += "Access-Control-Allow-Origin: *\r\n";
-                str += "Access-Control-Allow-Methods: GET,POST,OPTIONS\r\n";
-                str += "Access-Control-Allow-Credentials: true\r\n";
-                str += "Access-Control-Max-Age: 86400\r\n";
-                str += "\r\n";
-                //LOG_DEBUG << str;
-                ptr->send(str.c_str(), str.length());
-            }else
-                sendMail(ptr);
-        }else
-        {
-            LOG_ERROR << "Request parse failed";
-        }
-        buffer->retrieve(header.length());
-    }else
+        HttpRequest& request = httpContext_->request();
+        HttpResponse response(buffer_.get(), false);
+        sendMail(ptr, request, response);
+    } else
     {
-        if(parse_->headerSmall())
-        {
-            LOG_DEBUG << "header not enought";
-            return;
-        }else if(parse_->headerError())
-        {
-            LOG_ERROR << "header error " << header;
-            ptr->forceClose();
-        }else if(parse_->headerBad())
-        {
-            LOG_ERROR << "header bad " << header;
-            ptr->forceClose();
-
-        }
+        return;
     }
+    assert(buffer->readableBytes() == 0);
 }
 
 void MailServer::pythonModeInit()
@@ -142,7 +75,6 @@ void MailServer::pythonModeInit()
     }
     PyRun_SimpleString("import sys, os");
     PyRun_SimpleString("sys.path.append('./')");
-    //PyRun_SimpleString("print os.path.abspath('.')");
     pModule = PyImport_ImportModule("mail");
     if(!pModule)
     {
@@ -169,15 +101,15 @@ void MailServer::pythonModeInit()
     }
 }
 
-void MailServer::sendMail(const std::shared_ptr<TcpConnection> &ptr)
+void MailServer::sendMail(const std::shared_ptr<TcpConnection> &ptr, HttpRequest& httpRequest, HttpResponse& httpResponse)
 {
-    std::string email(std::move(parse_->getAsStringWithDecode("email")));
-    if(email != "")
+    if(httpRequest.queryArgumentsExists("email"))
     {
-        auto& pool = Singletion<RedisConnectionPool>::instance();
-        auto conn = pool.getConnection();
-        conn->selectTable(1);
-        if(!conn->existsKey(email))
+        std::string email(std::move(httpRequest.getQueryARgumentsWithDecode("email")));
+        auto& redispool = Singletion<RedisConnectionPool>::instance();
+        auto redisconn = redispool.getConnection();
+        redisconn->selectTable(4);
+        if(!redisconn->existsKey(email))
         {
             pRet = PyObject_CallMethod(pMail, "get_code", NULL);
             if(!pRet)
@@ -194,23 +126,38 @@ void MailServer::sendMail(const std::shared_ptr<TcpConnection> &ptr)
                 Py_DECREF(pRet);
                 return;
             }
-            conn->selectTable(1);
-            conn->setValue(email, str, 60);
-            conn->selectTable(2);
-            conn->setValue(email, str, 3600);
+            redisconn->setStringValue(email.c_str(), str, 60);
+            redisconn->selectTable(0);
+            redispool.close(redisconn);
             LOG_DEBUG << "send success to " << email;
             Py_DECREF(pRet);
             Py_DECREF(pRet2);
-            close(ptr);
+            std::string json_body("{\"status\":1}");
+            send(ptr, httpRequest, httpResponse, json_body);
         }
         else
         {
-            close(ptr);
+            redisconn->selectTable(0);
+            redispool.close(redisconn);
+            std::string json_body("{\"status\":1}");
+            send(ptr, httpRequest, httpResponse, json_body);
         }
-        pool.close(conn);
     }else
     {
         LOG_ERROR << "MailServer::sendMail failed can't get email number";
         ptr->forceClose();
     }
+}
+
+void MailServer::send(const std::shared_ptr<TcpConnection> &ptr, HttpRequest &httpRequest,
+                       HttpResponse &httpResponse, std::string& body){
+    httpResponse.setResponseCode(200);
+    httpResponse.setContentType("text/json; charset=utf-8");
+    httpResponse.addHeader("Access-Control-Allow-Origin", httpRequest.getHeader("Origin"));
+    httpResponse.addHeader("Access-Control-Allow-Credentials","true");
+    httpResponse.addHeader("Access-Control-Allow-Method", "GET,POST");
+    httpResponse.setBody(body);
+    httpResponse.appendToBuffer();
+    ptr->send(buffer_.get());
+    buffer_->retrieveAll();
 }

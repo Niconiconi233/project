@@ -25,6 +25,8 @@ public:
     //使用默认超时的设置k-v
     void setStringValue(unsigned int key, const std::string& value);
 
+    void setStringValue(const char* key, const char* value, int time);
+
     //自定义超时的设置k-v
     void setStringValue(unsigned int key, const std::string& value, int timeout);
 
@@ -66,6 +68,15 @@ public:
     //get top 6
     std::vector<std::string> sortSetTop();
 
+                    /*列表操作*/
+    void setListValue(int uid, const char* message);
+
+    size_t getListLen(int uid);
+
+    std::vector<std::string> getListRange(int uid, size_t begin, size_t end);
+
+    void removeListRange(int uid, int begin, int end);
+
 
 
     //判断k是否存在
@@ -79,6 +90,10 @@ public:
     bool hasExpire(const std::string& key);
 
     bool hasExpire(unsigned int key);
+
+    bool delValue(const std::string& key);
+
+    bool delValue(int key);
 
 
 

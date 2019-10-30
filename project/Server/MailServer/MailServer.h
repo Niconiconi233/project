@@ -16,7 +16,9 @@
 
 
 class EventLoop;
-class RequestParse;
+class HttpContext;
+class HttpRequest;
+class HttpResponse;
 
 class MailServer {
 public:
@@ -30,16 +32,19 @@ public:
 
     void onMessage(const std::shared_ptr<TcpConnection>&, Buffer* buffer, Timestamp time);
 
-    void sendMail(const std::shared_ptr<TcpConnection>& ptr);
+    void sendMail(const std::shared_ptr<TcpConnection>& ptr, HttpRequest& httpRequest, HttpResponse& httpResponse);
 
     void pythonModeInit();
+
+    void send(const std::shared_ptr<TcpConnection>& ptr, HttpRequest& httpRequest, HttpResponse& httpResponse, std::string& body);
 
 private:
     EventLoop* loop_;
     std::string address_;
     uint16_t port_;
     std::unique_ptr<TcpServer> servPtr_;
-    std::unique_ptr<RequestParse> parse_;
+    std::unique_ptr<Buffer> buffer_;
+    std::unique_ptr<HttpContext> httpContext_;
     PyObject *pModule, *pDict, *pClass, *pMail, *pRet, *pRet2;
 };
 

@@ -21,42 +21,42 @@ void HttpResponse::appendToBuffer() const
     switch(responceCode_)
     {
         case 200:
-            buffer_.append(statusCode_[responceCode_]);
+            buffer_->append(statusCode_[responceCode_]);
             break;
         case 400:
-            buffer_.append(statusCode_[responceCode_]);
+            buffer_->append(statusCode_[responceCode_]);
             break;
         case 403:
-            buffer_.append(statusCode_[responceCode_]);
+            buffer_->append(statusCode_[responceCode_]);
             break;
         case 404:
-            buffer_.append(statusCode_[responceCode_]);
+            buffer_->append(statusCode_[responceCode_]);
             break;
         case 500:
-            buffer_.append(statusCode_[responceCode_]);
+            buffer_->append(statusCode_[responceCode_]);
             break;
         case 503:
-            buffer_.append(statusCode_[responceCode_]);
+            buffer_->append(statusCode_[responceCode_]);
             break;
         default:
             break;
     }
     if(closeConnection_)
     {
-        buffer_.append("Connection: close\r\n");
+        buffer_->append("Connection: close\r\n");
     }else
     {
         snprintf(buf, sizeof buf, "Content-Length: %zd\r\n", body_.size());
-        buffer_.append(buf);
-        buffer_.append("Connection: Keep-Alive\r\n");
+        buffer_->append(buf);
+        buffer_->append("Connection: Keep-Alive\r\n");
     }
     for(const auto& header : headers_)
     {
-        buffer_.append(header.first);
-        buffer_.append(": ");
-        buffer_.append(header.second);
-        buffer_.append("\r\n");
+        buffer_->append(header.first);
+        buffer_->append(": ");
+        buffer_->append(header.second);
+        buffer_->append("\r\n");
     }
-    buffer_.append("\r\n");
-    buffer_.append(body_);
+    buffer_->append("\r\n");
+    buffer_->append(body_);
 }

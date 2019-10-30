@@ -10,11 +10,19 @@
 
 using namespace std;
 
+RedisConnectionPool pool;
+
+void func()
+{
+    auto conn = pool.getConnection();
+    RedisConnectionPool_guard guard(pool, conn);
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+}
+
 int main()
 {
-    RedisConnectionPool pool;
+    /*RedisConnectionPool pool;
     auto conn = pool.getConnection();
-    /*test string*/
     conn->selectTable(0);
     conn->setStringValue(1, "{\"uid\": 1,\"token\": \"hhhhhhhajkfhkjdhfuiwehfhdjkfhkjsdhfk\",\"status\": 1}");
     conn->setStringValue(2, "{\"uid\": 2,\"token\": \"hhhhhhhajkfhkjdhfuiwehfhdjkfhkjsdhfk\",\"status\": 1}", 60 * 60);
@@ -61,8 +69,24 @@ int main()
 
     pool.close(conn);
 
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+    std::this_thread::sleep_for(std::chrono::seconds(5));*/
 
+    //std::vector<std::thread> list(15);
+    //for(int i = 0; i < 15; ++i)
+    //{
+    //    list[i] = std::thread(func);
+    //}
+    //for(auto& i : list)
+    //    i.join();
+    auto conn = pool.getConnection();
+    conn->setListValue(1, "nmsl");
+    conn->setListValue(2, "nmsl");
+    conn->setListValue(1, "cnm");
+    std::cout<<conn->getListLen(1)<<std::endl;
+    auto list = conn->getListRange(1, 0, 5);
+    for(auto& i : list)
+        std::cout<<i<<std::endl;
+    pool.close(conn);
     return 0;
 }
 

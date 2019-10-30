@@ -11,6 +11,7 @@
 #include <pthread.h>
 #include "../Logging/base/SingLeton.h"
 #include "../Logging/base/ConfigReader.h"
+#include "../Logging/base/Logging.h"
 
 #include <stdio.h>//printf
 
@@ -50,6 +51,7 @@ public:
 
     ~ConnectionPool()
     {
+        assert(vector_.size() == currsize_);
         for(auto& i : vector_)
             i.reset();
     }
@@ -73,15 +75,13 @@ public:
 
     connPtr getConnection()
     {
-
         pthread_mutex_lock(&mutex_);
         while(vector_.size() == 0)
         {
             pthread_cond_wait(&cond_, &mutex_);
         }
         {
-            //std::swap(vector_[0], vector_[vector_.size() - 1]);
-            connPtr ptr(vector_.back());
+            connPtr ptr(std::move(vector_.back()));
             vector_.pop_back();
             refixPool();
             pthread_mutex_unlock(&mutex_);

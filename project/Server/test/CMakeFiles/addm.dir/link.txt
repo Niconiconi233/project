@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC  -std=c++0x -fPIC  -shared -Wl,-soname,libaddm.so -o libaddm.so CMakeFiles/addm.dir/redis_message.cpp.o CMakeFiles/addm.dir/home/soft01/cache/net_t/net_fix/Server/RapidJson.cpp.o -lhiredis 

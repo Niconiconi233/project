@@ -2,12 +2,13 @@
 // Created by soft01 on 2019/7/30.
 //
 
-#include "../EventLoop.h"
-#include "../Timestamp.h"
-#include "../../Logging/base/Logging.h"
+//#include "../EventLoop.h"
+//#include "../Timestamp.h"
+//#include "../../Logging/base/Logging.h"
 
-#include "../TimerHeap.hpp"
-#include "../Timer.h"
+//#include "../TimerHeap.hpp"
+//#include "../Timer.h"
+#include "../File.h"
 
 #include <iostream>
 #include <map>
@@ -15,7 +16,7 @@
 
 using namespace std;
 
-void runatcb()
+/*void runatcb()
 {
     std::cout<<"run at cb"<<std::endl;
 }
@@ -50,18 +51,18 @@ bool NodeCompare(const NodeItem& lhs, const NodeItem& rhs)
 bool cm(int i, int j)
 {
     return i > j;
-}
+}*/
 
 int main()
 {
-    auto cb = std::bind(&runatcb);
+    /*auto cb = std::bind(&runatcb);
     EventLoop loop;
     loop.runAtWithHeap(addTime(Timestamp::now(), 3), std::bind(&runatcb));
     loop.runEveryWithHeap(5, std::bind(&runeverycb));
     loop.runAfterWithHeap(7, std::bind(&runaftercb));
     loop.runEveryWithHeap(9, std::bind(&runeverycb2));
     loop.loop();
-    /*Timestamp when1(addTime(Timestamp::now(), 5));
+    Timestamp when1(addTime(Timestamp::now(), 5));
     Timestamp when2(addTime(Timestamp::now(), 3));
     Timestamp when3(addTime(Timestamp::now(), 8));
     Timestamp when4(addTime(Timestamp::now(), 7));
@@ -97,6 +98,17 @@ int main()
         cout<<endl;
         sleep(3);
     }*/
+
+    File file("1.txt");
+    char str[] = "nmsl\t\nwdnmd\n";
+    if(file.ensure())
+    {
+        if(file.get_fd())
+            file.write(str, sizeof str);
+    } else
+    {
+        cout<<"error"<<endl;
+    }
 
     return 0;
 }

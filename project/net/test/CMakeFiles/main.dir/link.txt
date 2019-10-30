@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++0x -g  -rdynamic CMakeFiles/main.dir/test.cc.o  -o main -lnet -llog -lpthread 

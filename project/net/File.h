@@ -16,6 +16,8 @@ public:
         fd_(-1)
     {
         init();
+        get_fd();
+
     }
 
     File()
@@ -69,7 +71,7 @@ public:
         if(have_file)
             if(fd_ == -1)
             {
-                fd_ = ::open(fileName_.c_str(), O_RDONLY | O_CLOEXEC | O_CREAT);
+                fd_ = ::open(fileName_.c_str(), O_RDWR | O_CLOEXEC | O_CREAT, 0755);
                 if(fd_ < 0)
                 {
                     LOG_ERROR << "get_fd failed";
@@ -113,6 +115,16 @@ public:
         {
             LOG_FATAL << "no such file " << fileName_;
             return std::string{};
+        }
+    }
+
+    void write(const void* data, size_t len)
+    {
+        if(fd_ != -1)
+        {
+            int n = ::write(fd_, data, len);
+            if(n <= 0)
+                LOG_ERROR << "File::write failed " << strerror(errno);
         }
     }
 

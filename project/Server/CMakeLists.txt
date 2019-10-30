@@ -8,9 +8,11 @@ SET(SRC_LIST
         HttpServer.cpp
         HttpResponse.cpp
         HttpContext.cpp
-        HttpContext.cpp
         Redis.cpp
-        RapidJson.cpp)
+        RapidJson.cpp
+        DbManager.cpp
+        TaskList.cpp
+        )
 
 add_executable(server ${SRC_LIST})
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
@@ -20,3 +22,4 @@ target_link_libraries(server log)
 target_link_libraries(server net)
 target_link_libraries(server mysqlcppconn)
 target_link_libraries(server hiredis)
+target_link_libraries(server python2.7)

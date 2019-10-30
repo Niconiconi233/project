@@ -24,7 +24,7 @@ bool HttpContext::processRequestLine(const char *begin, const char *end)
                 request_.setQuery(question + 1, space);
             } else
             {
-                request_.setPath(start, space);
+                request_.setPath(start + 1, space);
             }
             start = space + 1;
             succeed = end - start == 8 && std::equal(start, end - 1, "HTTP/1.");
