@@ -9,8 +9,8 @@ arr = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','
 
 class mail:
     def __init__(self):
-        self.pwd='ayrfzcadudlhbfjd'
-        self.sender='1660994874@qq.com'
+        self.pwd='SMTP密码'
+        self.sender='发件邮箱'
 
     def get_code(self):
         res = ""
@@ -344,7 +344,7 @@ class mail:
 def main():
     m = mail()
     code = m.get_code()
-    if m.send(code,'3457554915@qq.com'):
+    if m.send(code,'xx'):
         print "success"
         print code
     else:
